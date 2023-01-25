@@ -18,11 +18,12 @@ explore: opportunity {
     relationship: many_to_one
   }
 
-  join: campaign {
+  join: account {
     type: left_outer
-    sql_on: ${opportunity.campaign_id} = ${campaign.id} ;;
+    sql_on: ${contact.account_id} = ${account.id} ;;
     relationship: many_to_one
   }
+
   }
 
 
