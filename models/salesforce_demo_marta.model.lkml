@@ -12,17 +12,17 @@ persist_with: salesforce_demo_marta_default_datagroup
 
 
 explore: opportunity {
-  join: contact {
-    type: left_outer
-    sql_on: ${opportunity.contact_id} = ${contact.jigsaw_contact_id} ;;
-    relationship: many_to_one
-  }
+  # join: contact {
+  #   type: left_outer
+  #   sql_on: ${opportunity.contact_id} = ${contact.jigsaw_contact_id} ;;
+  #   relationship: many_to_one
+  # }
 
-  join: account {
-    type: left_outer
-    sql_on: ${contact.account_id} = ${account.id} ;;
-    relationship: many_to_one
-  }
+  # join: account {
+  #   type: left_outer
+  #   sql_on: ${contact.account_id} = ${account.id} ;;
+  #   relationship: many_to_one
+  # }
 
   }
 
