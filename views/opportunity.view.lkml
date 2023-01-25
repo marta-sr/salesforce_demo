@@ -364,15 +364,15 @@ view: opportunity {
     filters: [is_new_opportunity: "Yes"]
   }
 
-  measure: total_new_existing_customer {
+  measure: total_new_opp_new_customer {
     type: count_distinct
     sql: ${name} ;;
-    filters: [is_new_opportunity: "Yes", type: "Existing Customer - Upgrade"]
+    filters: [is_new_opportunity: "Yes", type: "New Customer"]
   }
 
   measure: percentage_new_existing_total {
     type: number
-    sql: 1.0*${total_new_existing_customer}/nullif(${total_new_opp}, 0) ;;
+    sql: 1.0*${total_new_opp_new_customer}/nullif(${total_new_opp}, 0) ;;
     value_format_name: percent_2
   }
 
