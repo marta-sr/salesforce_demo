@@ -26,8 +26,9 @@ view: opportunity {
 
 
   dimension: account_id {
+    group_label: "ID"
     type: string
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.account_id ;;
   }
 
@@ -90,6 +91,22 @@ view: opportunity {
       year
     ]
     sql: ${TABLE}.created_date ;;
+  }
+
+  dimension_group: since_created {
+    type: duration
+    intervals: [
+      day,
+      month,
+      year
+    ]
+    sql_start: ${created_date} ;;
+    sql_end: current_date() ;;
+  }
+
+  dimension: is_new_opp {
+    type: yesno
+    sql: ${months_since_created} < 4 ;;
   }
 
   dimension: current_generators_c {
@@ -337,7 +354,28 @@ view: opportunity {
     sql: ${TABLE}.type ;;
   }
 
+  ############# MEASURES ############
+
   measure: count {
     type: count
   }
+
+  measure: total_new_opp {
+    type: count_distinct
+    sql: ${name} ;;
+    filters: [is_new_opp: "Yes"]
+  }
+
+  measure: total_new_opp_new_client {
+    type: count_distinct
+    sql: ${name} ;;
+    filters: [is_new_opp: "Yes", type: "New Customer"]
+  }
+
+  measure: percentage_new_total {
+    type: number
+    sql: 1.0*${total_new_opp_new_client}/nullif(${total_new_opp}, 0) ;;
+    value_format_name: percent_2
+  }
+
 }
